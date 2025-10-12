@@ -1,27 +1,27 @@
 /** @type {import("eslint").Linter.Config} */
 export default {
   root: true,
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
     },
   },
-  plugins: ["@typescript-eslint", "react", "prettier"],
+  plugins: ['@typescript-eslint', 'react', 'prettier'],
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   rules: {
-    "prettier/prettier": "error",
+    'prettier/prettier': 'error',
   },
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
 };

@@ -1,6 +1,6 @@
 import { Button } from '@repo/ui';
 
-export default function Page() {
+export default function Home() {
   return (
     <>
       <Button>Click Me</Button>

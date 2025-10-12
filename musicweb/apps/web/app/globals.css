@@ -1,26 +1,27 @@
 @import "tailwindcss";
 @import "@repo/tailwind-config";
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+    /* Light Mode */
+    --color-primary: #C5CBE3;
+    --color-secondary: #4056A1;
+    --color-destructive: #F13C20;
+    --color-background: #EFE2BA;
+    --color-accent: #D79922;
+    --color-foreground: #4056A1;
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark Mode Colors */
+    --color-primary: #9FB1D1;
+    --color-secondary: #2A3870;
+    --color-destructive: #B82A17;
+    --color-background: #2D2D35;
+    --color-accent: #A66F16;
+    --color-foreground: #EFE2BA;
+  }
 }
