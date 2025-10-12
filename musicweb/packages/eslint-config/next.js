@@ -5,6 +5,7 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
 import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
+import pluginTailwind from "eslint-plugin-tailwindcss";
 import { config as baseConfig } from "./base.js";
 
 /**
@@ -29,10 +30,13 @@ export const nextJsConfig = [
   {
     plugins: {
       "@next/next": pluginNext,
+      "tailwindcss": pluginTailwind,
     },
     rules: {
       ...pluginNext.configs.recommended.rules,
       ...pluginNext.configs["core-web-vitals"].rules,
+      "tailwindcss/classnames-order": "warn",
+      "tailwindcss/enforces-negative-arbitrary-values": "error",
     },
   },
   {

@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "pnpm dlx tsx --env-file=.env --watch src/index.ts",
     "check-types": "tsc --noEmit",
+    "lint": "eslint 'src/**/*.{ts,js}' --max-warnings 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,7 +19,9 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@types/express": "^5.0.3",
+    "eslint": "^9.33.0",
     "typescript": "5.9.2"
   }
 }
