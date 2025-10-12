@@ -8,5 +8,9 @@
     "allowJs": true,
     "jsx": "preserve",
     "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   }
 }
