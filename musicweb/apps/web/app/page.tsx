@@ -1,8 +1,9 @@
+import {Button} from "@repo/ui"
 
 export default function Page() {
   return (
-    <main>
-      <h1>web</h1>
-    </main>
+    <>
+     <Button>Click Me</Button>
+    </>
   );
 }

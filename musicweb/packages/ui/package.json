@@ -4,17 +4,29 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
+    ".": "./dist/index.js",
+    "./globals.css": "./src/globals.css",
     "./styles.css": "./dist/index.css",
-    "./*": "./dist/*.js"
+    "./postcss.config": "./postcss.config.mjs",
+    "./tailwind.config": "./tailwind.config.ts",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": [
+      "./src/hooks/*.ts",
+      "./src/hooks/*.tsx"
+    ],
+    "./components/*": "./src/components/*.tsx"
   },
   "license": "MIT",
   "scripts": {
     "build:styles": "tailwindcss -i ./src/global.css -o ./dist/index.css",
-    "build:components": "tsc",
+    "build:components": "tsc --outDir dist --declaration --declarationMap",
+    "build": "pnpm run build:styles && pnpm run build:components",
     "check-types": "tsc --noEmit",
     "dev:styles": "tailwindcss -i ./src/global.css -o ./dist/index.css --watch",
     "dev:components": "tsc --watch",
