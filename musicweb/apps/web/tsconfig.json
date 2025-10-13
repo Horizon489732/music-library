@@ -6,12 +6,26 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "components/*"
+      ],
+      "@icons/*": [
+        "components/icons/*"
+      ],
+      "@repo/types": ["../../packages/types/src"]
+    },
+    "jsx": "preserve"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
     "next.config.ts",
-    ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

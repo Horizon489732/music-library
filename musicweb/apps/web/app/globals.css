@@ -172,3 +172,25 @@
 body {
   letter-spacing: var(--tracking-normal);
 }
+
+@layer components {
+  .cd-cover_extra_small {
+    @apply w-10 h-10;
+  }
+
+  .cd-cover_small {
+    @apply w-[76px] h-[76px];
+  }
+
+  .cd-cover_medium {
+    @apply w-[199px] h-[199px];
+  }
+
+  .cd-cover_regular {
+    @apply xs:w-[239px] w-[169px] xs:h-[239px] h-[169px];
+  }
+
+  .cd-cover_wide {
+    @apply xs:w-[404px] w-[354px] xs:h-[404px] h-[354px];
+  }
+}

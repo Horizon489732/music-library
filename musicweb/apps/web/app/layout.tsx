@@ -19,11 +19,15 @@ const dmSans = localFont({
   ],
 });
 
+const spaceMono = localFont({
+  src: [{ path: '../public/fonts/SpaceMono-Regular.ttf' }],
+  variable: '--font-mono',
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${dmSans.className} font-sans antialiased`}>
+      <body className={`${dmSans.className} ${spaceMono.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>
