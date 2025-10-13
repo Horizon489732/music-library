@@ -9,24 +9,21 @@ export const metadata: Metadata = {
   icons: '/favicon.ico',
 };
 
-const ibmPlexSans = localFont({
+const dmSans = localFont({
   src: [
-    { path: '../public/fonts/IBMPlexSans-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/IBMPlexSans-Medium.ttf', weight: '500', style: 'normal' },
-    { path: '../public/fonts/IBMPlexSans-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: '../public/fonts/IBMPlexSans-Bold.ttf', weight: '700', style: 'normal' },
+    { path: '../public/fonts/DMSans-Light.ttf', weight: '300', style: 'normal' },
+    { path: '../public/fonts/DMSans-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../public/fonts/DMSans-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../public/fonts/DMSans-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../public/fonts/DMSans-Bold.ttf', weight: '700', style: 'normal' },
   ],
 });
 
-const bebasNeue = localFont({
-  src: [{ path: '../public/fonts/BebasNeue-Regular.ttf', weight: '400', style: 'normal' }],
-  variable: '--bebas-neue',
-});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>
+      <body className={`${dmSans.className} font-sans antialiased`}>
         {children}
       </body>
     </html>

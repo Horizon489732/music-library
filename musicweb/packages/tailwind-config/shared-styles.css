@@ -1,12 +1,32 @@
 @import "tailwindcss";
 
+:root {
+    --radius: 0.5rem;
+}
+
 @layer base {
   body {
-    background-color: aqua;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'DM Sans', sans-serif;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--bebas-neue, sans-serif); }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }
 }
 
 @theme {
