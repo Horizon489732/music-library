@@ -1,8 +1,8 @@
 export const sampleSongs = [
   {
     id: 1,
-    title: 'Shin Takata Jima',
-    album: 'Music Album',
+    title: 'Yoru no Odoriko',
+    album: 'The Best Album Ever Made',
     artist: 'Sakanaction',
     genre: 'Dance / Indie',
     duration: '4:12',

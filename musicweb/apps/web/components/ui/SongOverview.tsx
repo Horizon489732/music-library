@@ -1,4 +1,4 @@
-import type { SongType } from '@repo/types';
+import { SongType } from '@repo/types';
 import Image from 'next/image';
 import Star from '@icons/star.svg';
 import CD from '@icons/cd.svg';
@@ -13,7 +13,6 @@ const SongOverview = ({
   genre,
   total_copies,
   available_copies,
-  duration,
   description,
   color,
   imageUrl,
@@ -22,14 +21,16 @@ const SongOverview = ({
     <section className="flex flex-col-reverse items-center gap-12 sm:gap-32 xl:flex-row xl:gap-8">
       <div className="flex flex-1 flex-col gap-5">
         <h1 className="text-foreground text-5xl font-bold md:text-7xl">{title}</h1>
+        <p className="text-xl">
+          By <span className="text-secondary font-bold">{artist}</span>
+        </p>
         <div className="text-muted-foreground mt-7 flex flex-row flex-wrap items-center gap-4 text-xl">
-          <p>
-            By <span className="text-primary font-semibold">{artist}</span>
-          </p>
           <p>
             Genre: <span className="text-primary font-semibold">{genre}</span>
           </p>
-
+          <p>
+            Album: <span className="text-primary font-semibold">{album}</span>
+          </p>
           <div className="flex flex-row gap-1">
             <Image src={Star} alt="star" width={22} height={22} />
             <p>{rating}</p>
@@ -37,10 +38,10 @@ const SongOverview = ({
 
           <div className="flex flex-row flex-wrap gap-4">
             <p>
-              Total Copies: <span>{total_copies}</span>
+              Total Copies: <span className='text-primary'>{total_copies}</span>
             </p>
             <p>
-              Available Copies: <span>{available_copies}</span>
+              Available Copies: <span className='text-primary'>{available_copies}</span>
             </p>
           </div>
 
@@ -50,25 +51,21 @@ const SongOverview = ({
             <p className="font-mono text-xl">Rent CD</p>
           </Button>
         </div>
+      </div>
 
         <div className="flex flex-1 justify-center">
           <div className="relative">
-            <SongVinyl
-              variant="wide"
-              color={color}
-              imageUrl={imageUrl}
-              className="z-10"
-            />
+            <SongVinyl variant="wide" color={color} imageUrl={imageUrl} className="z-10" />
 
             <SongVinyl
               variant="wide"
               color={color}
               imageUrl={imageUrl}
-              className="absolute z-0 opacity-55 left-16 bottom-2"
+              className="absolute bottom-2 left-16 z-0 opacity-25"
             />
           </div>
         </div>
-      </div>
+      
     </section>
   );
 };
