@@ -4,11 +4,15 @@ import { SongType } from '@repo/types';
 
 import { sampleSongs } from 'contants';
 
-export default function Home() {
+const Home = () => {
+
   return (
     <>
       <SongOverview {...(sampleSongs[0] as SongType)} />
+
       <SongList title="Latest Songs" songs={sampleSongs} containerClassName="mt-28" />
     </>
   );
-}
+};
+
+export default Home;

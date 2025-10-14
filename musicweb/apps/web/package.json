@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@repo/neon-db": "workspace:*",
     "@repo/ui": "workspace:*",
     "next": "^15.4.2",
     "react": "^19.1.0",
