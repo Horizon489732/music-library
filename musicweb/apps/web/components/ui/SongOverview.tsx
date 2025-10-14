@@ -38,10 +38,10 @@ const SongOverview = ({
 
           <div className="flex flex-row flex-wrap gap-4">
             <p>
-              Total Copies: <span className='text-primary'>{total_copies}</span>
+              Total Copies: <span className="text-primary">{total_copies}</span>
             </p>
             <p>
-              Available Copies: <span className='text-primary'>{available_copies}</span>
+              Available Copies: <span className="text-primary">{available_copies}</span>
             </p>
           </div>
 
@@ -53,19 +53,18 @@ const SongOverview = ({
         </div>
       </div>
 
-        <div className="flex flex-1 justify-center">
-          <div className="relative">
-            <SongVinyl variant="wide" color={color} imageUrl={imageUrl} className="z-10" />
+      <div className="flex flex-1 justify-center">
+        <div className="relative">
+          <SongVinyl variant="wide" color={color} imageUrl={imageUrl} className="z-10" />
 
-            <SongVinyl
-              variant="wide"
-              color={color}
-              imageUrl={imageUrl}
-              className="absolute bottom-2 left-16 z-0 opacity-25"
-            />
-          </div>
+          <SongVinyl
+            variant="wide"
+            color={color}
+            imageUrl={imageUrl}
+            className="absolute bottom-2 left-16 z-0 opacity-25"
+          />
         </div>
-      
+      </div>
     </section>
   );
 };

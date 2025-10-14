@@ -21,7 +21,7 @@ interface Props {
 const SongVinyl = ({
   className,
   variant = 'regular',
-  color = '#012B48',
+  color = '#D79922',
   imageUrl = 'https://placehold.co/400x400.png', // make square
 }: Props) => {
   return (
@@ -37,10 +37,11 @@ const SongVinyl = ({
         <Image src={imageUrl} alt="Song CD Player" fill className="object-cover" />
 
         <div
-          className="absolute left-1/2 top-1/2 rounded-full border-2 border-black bg-[#D79922]"
+          className={`absolute left-1/2 top-1/2 rounded-full border-2 border-black`}
           style={{
             width: '25%',
             height: '25%',
+            backgroundColor: color,
             transform: 'translate(-50%, -50%)',
           }}
         />

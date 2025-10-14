@@ -12,6 +12,7 @@ export type SongType = {
   color: string;
   imageUrl: string;
   audioUrl: string;
+  language: string;
   lyrics?: string;
   tags?: string[];
 };
