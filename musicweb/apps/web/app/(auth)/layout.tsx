@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="text-muted-foreground relative flex flex-col-reverse sm:flex-row">
       <section className="my-auto flex h-full min-h-screen flex-1 items-center px-5 py-10">
-        <div className="mx-auto flex max-w-xl flex-col gap-6 rounded-lg border-2 border-black p-10">
+        <div className="mx-auto flex w-full max-w-xl flex-col gap-6 rounded-lg border-2 border-black p-10">
           <div className="flex flex-row items-center gap-3">
             <Image src={Logo} alt="logo" width={48} height={48} />
             <h1 className="text-2xl font-semibold">iLoveMusic</h1>
