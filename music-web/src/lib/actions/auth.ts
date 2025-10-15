@@ -1,5 +1,6 @@
 "use server";
-import { signUpSchema } from "../validation";
+import { signUpSchema, signInSchema } from "../validation";
+import { signIn } from "@/server/auth";
 import { db } from "@/server/db";
 import { executeAction } from "../executeActions";
 import { hash } from "bcrypt";
@@ -11,7 +12,12 @@ interface SignUpInput {
   confirmPassword: string;
 }
 
-const signUp = async (formData: SignUpInput) => {
+interface SignInInput {
+  email: string;
+  password: string;
+}
+
+export const signUp = async (formData: SignUpInput) => {
   return executeAction({
     actionFn: async () => {
       const validatedData = signUpSchema.parse(formData);
@@ -29,4 +35,16 @@ const signUp = async (formData: SignUpInput) => {
   });
 };
 
-export { signUp };
+export const signInWithCredentials = async (
+  formData: SignInInput,
+) => {
+  return executeAction({
+    actionFn: async () => {
+      await signIn("credentials", {
+        redirect: false,
+        ...formData
+      })
+    },
+    successMessage: "Signed in successfully"
+  })
+};

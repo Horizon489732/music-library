@@ -43,8 +43,8 @@ const AuthForm = <T extends z.ZodTypeAny>({
   const handleSubmit = async (data: z.infer<typeof schema>) => {
     const result = await onSubmit(data);
     if (result.success) {
-      console.log("Sign up Success")
-        redirect("/sign-in");
+        console.log("Sign in Success");
+        redirect("/");
     } else {
       console.error(result.error);
     }

@@ -20,7 +20,7 @@ const executeAction = async <T>({
     if (isRedirectError(error)) {
       throw error;
     }
-
+    console.log(error)
     return {
       success: false,
       message: "An error has occurred during executing the action",

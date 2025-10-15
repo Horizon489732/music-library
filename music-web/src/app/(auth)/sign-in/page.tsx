@@ -2,6 +2,7 @@
 
 import AuthForm from "@/components/AuthForm";
 import { signInSchema } from "@/lib/validation";
+import { signInWithCredentials } from "@/lib/actions/auth";
 
 export default function Page() {
   return (
@@ -9,7 +10,7 @@ export default function Page() {
       type="SIGN_IN"
       schema={signInSchema}
       defaultValues={{ email: "", password: "" }}
-      onSubmit={() => {}}
+      onSubmit={signInWithCredentials}
     />
   );
 }
