@@ -1,7 +1,7 @@
 import SongList from "@/components/SongList";
 import SongOverview from "@/components/SongOverview";
 
-import { sampleSongs } from "../../contants";
+import { sampleSongs } from "@/contants";
 
 const Home = () => {
   return (

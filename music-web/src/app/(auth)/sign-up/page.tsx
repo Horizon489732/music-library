@@ -1,15 +1,21 @@
-'use client';
+"use client";
 
-import AuthForm from '@/components/AuthForm';
-import { signUpSchema } from '@/lib/validation';
+import AuthForm from "@/components/AuthForm";
+import { signUpSchema } from "@/lib/validation";
+import { signUp } from "@/lib/actions/auth";
 
 export default function Page() {
   return (
     <AuthForm
       type="SIGN_UP"
       schema={signUpSchema}
-      defaultValues={{ username: '', email: '', password: '', confirmPassword: '' }}
-      onSubmit={() => {}}
+      defaultValues={{
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      }}
+      onSubmit={signUp}
     />
   );
 }
