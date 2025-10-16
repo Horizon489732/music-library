@@ -3,7 +3,7 @@ import SongOverview from "@/components/SongOverview";
 
 import { sampleSongs } from "@/contants";
 
-const Home = () => {
+const Page = () => {
   return (
     <>
       <SongOverview {...(sampleSongs[0] as SongType)} />
@@ -17,4 +17,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Page;

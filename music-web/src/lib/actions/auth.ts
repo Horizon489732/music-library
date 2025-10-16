@@ -1,6 +1,6 @@
 "use server";
-import { signUpSchema, signInSchema } from "../validation";
-import { signIn } from "@/server/auth";
+import { signUpSchema } from "../validation";
+import { signIn, signOut } from "@/server/auth";
 import { db } from "@/server/db";
 import { executeAction } from "../executeActions";
 import { hash } from "bcrypt";
@@ -46,3 +46,8 @@ export const signInWithCredentials = async (formData: SignInInput) => {
     successMessage: "Signed in successfully",
   });
 };
+
+  return executeAction({actionFn:async () => {
+      await signOut({ redirect: false });
+  }, successMessage:"Sign out successfully"})
+}
