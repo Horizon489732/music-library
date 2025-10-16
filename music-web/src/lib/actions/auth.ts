@@ -47,6 +47,7 @@ export const signInWithCredentials = async (formData: SignInInput) => {
   });
 };
 
+export const loggingOut = async () => {
   return executeAction({actionFn:async () => {
       await signOut({ redirect: false });
   }, successMessage:"Sign out successfully"})
