@@ -34,7 +34,12 @@ export const HomeHeader = () => {
 
         <li>
           <Link href="user-profile">
-            <Button>Try It Out</Button>
+            <Button>
+              <p>Try It Out</p>
+              <svg width="15px" height="15px" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polyline fill="none" stroke="currentColor" stroke-width="2" points="7 2 17 12 7 22"/>
+              </svg>
+            </Button>        
           </Link>
         </li>
       </ul>
@@ -42,8 +47,7 @@ export const HomeHeader = () => {
   );
 };
 
-export const ProfileHeader = ({session}:{session?:Session | null}) => {
-
+export const ProfileHeader = ({ session }: { session?: Session | null }) => {
   return (
     <header className="my-10 flex justify-between gap-5">
       <Link href="/">

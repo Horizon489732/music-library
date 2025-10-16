@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 const Page = () => {
   const router = useRouter();
-  
+
   const handleLogout = async () => {
     try {
       await loggingOut();

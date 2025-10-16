@@ -54,7 +54,7 @@ export default async function RootLayout({
         <body
           className={`${dmSans.className} ${spaceMono.variable} font-sans antialiased`}
         >
-          <Toaster richColors />
+          <Toaster richColors closeButton position="top-right" />
           {children}
         </body>
       </SessionProvider>

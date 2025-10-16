@@ -10,10 +10,11 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     redirect("/sign-in");
   }
   return (
-  <div>
-    <ProfileHeader session={session}/>
-    <div>{children}</div>
-  </div>);
+    <div>
+      <ProfileHeader session={session} />
+      <div>{children}</div>
+    </div>
+  );
 };
 
 export default Layout;

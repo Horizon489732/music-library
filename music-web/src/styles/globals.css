@@ -177,10 +177,6 @@
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
-body {
-  letter-spacing: var(--tracking-normal);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -237,3 +233,15 @@ body {
   }
 }
   
+
+
+body {
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Override Sonner’s theme colors */
+[data-sonner-toaster][data-sonner-theme=light],
+[data-sonner-toaster][data-sonner-theme=dark] {
+  --normal-bg: var(--card) !important;
+  --normal-text: var(--card-foreground) !important;
+}

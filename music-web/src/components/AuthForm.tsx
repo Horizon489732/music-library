@@ -6,7 +6,7 @@ import type { DefaultValues, Path } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -43,17 +43,22 @@ const AuthForm = <T extends z.ZodTypeAny>({
   });
 
   const handleSubmit = async (data: z.infer<typeof schema>) => {
-    const result = await onSubmit(data);
-    if (result.success) {
-      toast.success(
-        isSignIn ? "Signed in successfully!" : "Success! Please Sign In",
-      );
-      router.push("/user-profile");
-    } else {
-      toast.error(`Error ${isSignIn ? "signing in" : "signing up"}`, {
-        description: result.error ?? "An error occurred.",
-      });
-    }
+  const myPromise = onSubmit(data);
+
+    toast.promise(myPromise, {
+      loading: isSignIn ? "Signing in..." : "Signing up...",
+      success: (result: { success: boolean; error?: string }) => {
+        if (result.success) {
+          router.push("/user-profile");
+          return isSignIn
+            ? "Signed in successfully!"
+            : "Account created! Please sign in.";
+        } else {
+          throw new Error(result.error ?? "Something went wrong");
+        }
+      },
+      error: (err: Error) => err.message || "Error occurred",
+    });
   };
 
   return (
