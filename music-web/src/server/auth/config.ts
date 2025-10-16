@@ -1,20 +1,26 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
+/* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
+
 import { compare } from "bcrypt";
-import { type NextAuthConfig } from "next-auth";
-import { encode as defaultEncode } from "next-auth/jwt";
-import { v4 as uuid } from "uuid";
+import { type NextAuthConfig, type DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db } from "@/server/db";
 import { signInSchema } from "@/lib/validation";
 
-const adapter = PrismaAdapter(db);
+declare module "next-auth" {
+  interface Session {
+    user?: {
+      id?: string;
+      name?: string;
+      email?: string;
+    } & DefaultSession["user"];
+  }
+}
 
 export const authConfig = {
   session: {
     strategy: "jwt",
   },
-
   providers: [
     CredentialsProvider({
       credentials: {
@@ -39,44 +45,29 @@ export const authConfig = {
         );
         if (!isPasswordValid) throw new Error("Invalid credentials.");
 
-        return user;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
       },
     }),
   ],
-  pages: {
-    signIn: "/sign-in",
-  },
-  adapter: PrismaAdapter(db),
   callbacks: {
-    async jwt({ token, account }) {
-      if (account?.provider === "credentials") {
-        token.credentials = true;
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
       }
       return token;
     },
-  },
-  jwt: {
-    encode: async function (params) {
-      if (params.token?.credentials) {
-        const sessionToken = uuid();
-
-        if (!params.token.sub) {
-          throw new Error("No user ID found in token");
-        }
-
-        const createdSession = await adapter?.createSession?.({
-          sessionToken: sessionToken,
-          userId: params.token.sub,
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        });
-
-        if (!createdSession) {
-          throw new Error("Failed to create session");
-        }
-
-        return sessionToken;
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
       }
-      return defaultEncode(params);
+
+      return session;
     },
   },
 } satisfies NextAuthConfig;

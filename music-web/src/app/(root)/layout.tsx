@@ -1,8 +1,11 @@
 import React from "react";
 
 import Header from "@/components/Header";
+import { auth } from "@/server/auth/index";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth();
+  console.log(session);
   return (
     <main className="root-container">
       <div className="mx-auto max-w-7xl">

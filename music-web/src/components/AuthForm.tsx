@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { DefaultValues, Path } from "react-hook-form";
 import { z } from "zod";
-import { redirect } from "next/navigation";
-
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "./ui/button";
 import {
   Form,
@@ -35,6 +35,8 @@ const AuthForm = <T extends z.ZodTypeAny>({
 }: Props<T>) => {
   const isSignIn = type === "SIGN_IN";
 
+  const router = useRouter();
+
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<z.infer<T>>,
@@ -43,10 +45,14 @@ const AuthForm = <T extends z.ZodTypeAny>({
   const handleSubmit = async (data: z.infer<typeof schema>) => {
     const result = await onSubmit(data);
     if (result.success) {
-        console.log("Sign in Success");
-        redirect("/");
+      toast.success(
+        isSignIn ? "Signed in successfully!" : "Signed up successfully!",
+      );
+      router.push("/");
     } else {
-      console.error(result.error);
+      toast.error(`Error ${isSignIn ? "signing in" : "signing up"}`, {
+        description: result.error ?? "An error occurred.",
+      });
     }
   };
 

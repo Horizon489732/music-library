@@ -35,16 +35,14 @@ export const signUp = async (formData: SignUpInput) => {
   });
 };
 
-export const signInWithCredentials = async (
-  formData: SignInInput,
-) => {
+export const signInWithCredentials = async (formData: SignInInput) => {
   return executeAction({
     actionFn: async () => {
       await signIn("credentials", {
         redirect: false,
-        ...formData
-      })
+        ...formData,
+      });
     },
-    successMessage: "Signed in successfully"
-  })
+    successMessage: "Signed in successfully",
+  });
 };

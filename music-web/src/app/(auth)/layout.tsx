@@ -1,7 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+import { auth } from "@/server/auth/index";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth();
+  if (session) {
+    redirect("/");
+  }
   return (
     <main className="text-muted-foreground relative flex flex-col-reverse sm:flex-row">
       <section className="my-auto flex h-full min-h-screen flex-1 items-center px-5 py-10">
