@@ -4,6 +4,9 @@ import { signIn, signOut } from "@/server/auth";
 import { db } from "@/server/db";
 import { executeAction } from "../executeActions";
 import { hash } from "bcrypt";
+import { headers } from "next/headers";
+import ratelimit from "../ratelimit";
+import { redirect } from "next/navigation";
 
 interface SignUpInput {
   username: string;
@@ -20,9 +23,18 @@ interface SignInInput {
 export const signUp = async (formData: SignUpInput) => {
   return executeAction({
     actionFn: async () => {
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      const ipAddress = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+
+      const {success} = await ratelimit.limit(ipAddress);
+
+      if (!success) {
+        return redirect("/hold-on")
+      }
+
       const validatedData = signUpSchema.parse(formData);
       const hashedPassword = await hash(validatedData.password, 10);
-
+ 
       await db.user.create({
         data: {
           name: validatedData.username,
