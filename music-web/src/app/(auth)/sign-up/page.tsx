@@ -18,6 +18,6 @@ const Page = () => {
       onSubmit={signUp}
     />
   );
-}
+};
 
 export default Page;

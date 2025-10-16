@@ -46,9 +46,9 @@ const AuthForm = <T extends z.ZodTypeAny>({
     const result = await onSubmit(data);
     if (result.success) {
       toast.success(
-        isSignIn ? "Signed in successfully!" : "Signed up successfully!",
+        isSignIn ? "Signed in successfully!" : "Success! Please Sign In",
       );
-      router.push("/");
+      router.push("/user-profile");
     } else {
       toast.error(`Error ${isSignIn ? "signing in" : "signing up"}`, {
         description: result.error ?? "An error occurred.",

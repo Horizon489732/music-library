@@ -3,7 +3,7 @@ import SongOverview from "@/components/SongOverview";
 
 import { sampleSongs } from "@/contants";
 
-const Page = () => {
+const Layout = () => {
   return (
     <>
       <SongOverview {...(sampleSongs[0] as SongType)} />
@@ -17,4 +17,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Layout;

@@ -1,15 +1,12 @@
 import React from "react";
 
-import Header from "@/components/Header";
-import { auth } from "@/server/auth/index";
+import { HomeHeader } from "@/components/Header";
 
-const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await auth();
-
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="root-container">
       <div className="mx-auto max-w-7xl">
-        <Header session={session}/>
+        <HomeHeader />
         <div className="mt-20 pb-20">{children}</div>
       </div>
     </main>

@@ -13,6 +13,6 @@ const Page = () => {
       onSubmit={signInWithCredentials}
     />
   );
-}
+};
 
 export default Page;
