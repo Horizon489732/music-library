@@ -34,12 +34,23 @@ export const HomeHeader = () => {
 
         <li>
           <Link href="user-profile">
-            <Button>
+            <Button className="cursor-pointer rounded-4xl hover:scale-105">
               <p>Try It Out</p>
-              <svg width="15px" height="15px" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <polyline fill="none" stroke="currentColor" stroke-width="2" points="7 2 17 12 7 22"/>
+              <svg
+                width="15px"
+                height="15px"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <polyline
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  points="7 2 17 12 7 22"
+                />
               </svg>
-            </Button>        
+            </Button>
           </Link>
         </li>
       </ul>

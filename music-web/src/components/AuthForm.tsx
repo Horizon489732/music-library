@@ -43,7 +43,7 @@ const AuthForm = <T extends z.ZodTypeAny>({
   });
 
   const handleSubmit = async (data: z.infer<typeof schema>) => {
-  const myPromise = onSubmit(data);
+    const myPromise = onSubmit(data);
 
     toast.promise(myPromise, {
       loading: isSignIn ? "Signing in..." : "Signing up...",
@@ -102,7 +102,7 @@ const AuthForm = <T extends z.ZodTypeAny>({
           ))}
           <Button
             type="submit"
-            className="inline-flex min-h-12 w-full items-center justify-center rounded-md px-6 text-base font-bold"
+            className="cursor-pointer inline-flex min-h-12 w-full items-center justify-center rounded-md px-6 text-base font-bold"
           >
             Submit
           </Button>

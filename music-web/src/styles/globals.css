@@ -181,9 +181,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-x: hidden;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: 'DM Sans', sans-serif;
+    letter-spacing: var(--tracking-normal);
+    position: relative;
+    overflow-x: hidden;
   }
 
   .hide-scrollbar::-webkit-scrollbar {
@@ -208,7 +214,7 @@
 
 @layer components {
   .root-container { 
-    @apply flex min-h-screen flex-col px-5;
+    @apply flex min-h-screen flex-col px-2 sm:px-5;
     background-color: var(--background);  
   } 
 
@@ -231,12 +237,6 @@
   .cd-cover_wide {
     @apply xs:w-[404px] w-[354px] xs:h-[404px] h-[354px];
   }
-}
-  
-
-
-body {
-  letter-spacing: var(--tracking-normal);
 }
 
 /* Override Sonner’s theme colors */
