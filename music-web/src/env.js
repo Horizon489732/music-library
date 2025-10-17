@@ -16,9 +16,24 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     UPSTASH_REDIS_REST_URL: z.string().url(),
-    UPSTASH_REDIS_REST_TOKEN: process.env.NODE_ENV === "production"
+    UPSTASH_REDIS_REST_TOKEN:
+      process.env.NODE_ENV === "production"
         ? z.string()
         : z.string().optional(),
+    QSTASH_URL: z.string().url(),
+    QSTASH_TOKEN:
+      process.env.NODE_ENV === "production"
+        ? z.string()
+        : z.string().optional(),
+    QSTASH_CURRENT_SIGNING_KEY:
+      process.env.NODE_ENV === "production"
+        ? z.string()
+        : z.string().optional(),
+    QSTASH_NEXT_SIGNING_KEY:
+      process.env.NODE_ENV === "production"
+        ? z.string()
+        : z.string().optional(),
+    VERCEL_URL: z.string().url(),
   },
 
   /**
@@ -35,11 +50,16 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    VERCEL_URL: process.env.VERCEL_URL,
     AUTH_SECRET: process.env.AUTH_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    QSTASH_URL: process.env.QSTASH_URL,
+    QSTASH_TOKEN: process.env.QSTASH_TOKEN,
+    QSTASH_CURRENT_SIGNING_KEY: process.env.QSTASH_CURRENT_SIGNING_KEY,
+    QSTASH_NEXT_SIGNING_KEY: process.env.QSTASH_NEXT_SIGNING_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

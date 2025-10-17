@@ -37,8 +37,8 @@ export const HomeHeader = () => {
             <Button className="cursor-pointer rounded-4xl hover:scale-105">
               <p>Try It Out</p>
               <svg
-                width="15px"
-                height="15px"
+                width="12px"
+                height="12px"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"

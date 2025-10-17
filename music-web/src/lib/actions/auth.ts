@@ -26,15 +26,15 @@ export const signUp = async (formData: SignUpInput) => {
       // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
       const ipAddress = (await headers()).get("x-forwarded-for") || "127.0.0.1";
 
-      const {success} = await ratelimit.limit(ipAddress);
+      const { success } = await ratelimit.limit(ipAddress);
 
       if (!success) {
-        return redirect("/hold-on")
+        return redirect("/hold-on");
       }
 
       const validatedData = signUpSchema.parse(formData);
       const hashedPassword = await hash(validatedData.password, 10);
- 
+
       await db.user.create({
         data: {
           name: validatedData.username,
