@@ -35,7 +35,7 @@ export const HomeHeader = () => {
         <li>
           <Link href="user-profile">
             <Button className="cursor-pointer rounded-4xl hover:scale-105">
-              <p>Try It Out</p>
+              <p>Your Turn</p>
               <svg
                 width="12px"
                 height="12px"

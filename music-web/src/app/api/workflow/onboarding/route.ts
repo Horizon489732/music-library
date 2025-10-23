@@ -1,11 +1,45 @@
 import { serve } from "@upstash/workflow/nextjs";
+import { db } from "@/server/db";
+
+type UserState = "non-active" | "active";
 
 type InitialData = {
   email: string;
+  name: string;
+};
+
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+const THREE_DAYS_IN_MS = 3 * ONE_DAY_IN_MS;
+const THREE_HUNDRED_DAYS_IN_MS = 300 * ONE_DAY_IN_MS;
+
+const getUserState = async (email: string): Promise<UserState> => {
+  const user = await db.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  if (!user) {
+    return "non-active";
+  }
+
+  const updateAt = user?.updatedAt;
+  const today = new Date();
+
+  const timeDifference = today.getTime() - updateAt.getTime();
+
+  if (
+    timeDifference > THREE_DAYS_IN_MS &&
+    timeDifference <= THREE_HUNDRED_DAYS_IN_MS
+  ) {
+    return "non-active";
+  }
+
+  return "active";
 };
 
 export const { POST } = serve<InitialData>(async (context) => {
-  const { email } = context.requestPayload;
+  const { email, name } = context.requestPayload;
 
   await context.run("new-signup", async () => {
     await sendEmail("Welcome to the platform", email);
@@ -15,7 +49,7 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   while (true) {
     const state = await context.run("check-user-state", async () => {
-      return await getUserState();
+      return await getUserState(email);
     });
 
     if (state === "non-active") {
@@ -36,10 +70,3 @@ async function sendEmail(message: string, email: string) {
   // Implement email sending logic here
   console.log(`Sending ${message} email to ${email}`);
 }
-
-type UserState = "non-active" | "active";
-
-const getUserState = async (): Promise<UserState> => {
-  // Implement user state logic here
-  return "non-active";
-};
