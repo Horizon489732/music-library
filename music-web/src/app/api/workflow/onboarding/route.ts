@@ -1,5 +1,6 @@
 import { serve } from "@upstash/workflow/nextjs";
 import { db } from "@/server/db";
+import { sendEmail } from "@/lib/workflow";
 
 type UserState = "non-active" | "active";
 
@@ -42,7 +43,11 @@ export const { POST } = serve<InitialData>(async (context) => {
   const { email, name } = context.requestPayload;
 
   await context.run("new-signup", async () => {
-    await sendEmail("Welcome to the platform", email);
+    await sendEmail({
+      to: email,
+      subject: "Welcome to the platform",
+      body: `Hello ${name}. Thanks for signing up!`,
+    });
   });
 
   await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3);
@@ -54,19 +59,22 @@ export const { POST } = serve<InitialData>(async (context) => {
 
     if (state === "non-active") {
       await context.run("send-email-non-active", async () => {
-        await sendEmail("Email to non-active users", email);
+        await sendEmail({
+          to: email,
+          subject: "We miss you!",
+          body: "Come back and check out our platform.",
+        });
       });
     } else if (state === "active") {
       await context.run("send-email-active", async () => {
-        await sendEmail("Send newsletter to active users", email);
+        await sendEmail({
+          to: email,
+          subject: "Thank you",
+          body: "Thank you for using the service. Enjoy the music!",
+        });
       });
     }
 
     await context.sleep("wait-for-10-month", 60 * 60 * 24 * 30 * 10);
   }
 });
-
-async function sendEmail(message: string, email: string) {
-  // Implement email sending logic here
-  console.log(`Sending ${message} email to ${email}`);
-}
