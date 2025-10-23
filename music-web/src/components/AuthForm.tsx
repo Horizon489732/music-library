@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { DefaultValues, Path } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -47,14 +47,14 @@ const AuthForm = <T extends z.ZodTypeAny>({
 
     toast.promise(myPromise, {
       loading: isSignIn ? "Signing in..." : "Signing up...",
-      success: (result: { success: boolean; error?: string }) => {
+      success: (result: { success: boolean; message?: string }) => {
         if (result.success) {
           router.push("/user-profile");
           return isSignIn
             ? "Signed in successfully!"
             : "Account created! Please sign in.";
         } else {
-          throw new Error(result.error ?? "Something went wrong");
+          throw new Error(result.message ?? "Something went wrong");
         }
       },
       error: (err: Error) => err.message || "Error occurred",

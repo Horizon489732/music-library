@@ -1,5 +1,4 @@
 import React from "react";
-
 import { HomeHeader } from "@/components/Header";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

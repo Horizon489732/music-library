@@ -15,7 +15,10 @@ const Page = () => {
       <Image
         src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
         alt="Funny waiting"
-        className="h-64 w-64 rounded-lg shadow-lg"
+        width={256}
+        height={256}
+        unoptimized
+        className="rounded-lg shadow-lg"
       />
       <p className="text-sm">
         Recommendation: do a dramatic hair flip, sip some water, or question
