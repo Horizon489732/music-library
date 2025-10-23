@@ -7,6 +7,9 @@ import { hash } from "bcrypt";
 import { headers } from "next/headers";
 import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
+import { workflowClient } from "@/lib/workflow";
+import { env } from "@/env";
+
 
 interface SignUpInput {
   username: string;
@@ -35,6 +38,15 @@ export const signUp = async (formData: SignUpInput) => {
       const validatedData = signUpSchema.parse(formData);
       const hashedPassword = await hash(validatedData.password, 10);
 
+      const BASE_URL = env.VERCEL_URL
+        ? `${env.VERCEL_URL}`
+        : `http://localhost:3000`;
+
+      await workflowClient.trigger({
+        url: `${BASE_URL}/api/workflow/onboarding`,
+        body: {email: validatedData.email.toLocaleLowerCase(), name: validatedData.username}
+      })
+
       await db.user.create({
         data: {
           name: validatedData.username,
@@ -42,6 +54,7 @@ export const signUp = async (formData: SignUpInput) => {
           password: hashedPassword,
         },
       });
+
     },
     successMessage: "Signed up successfully",
   });

@@ -10,7 +10,7 @@ export const workflowClient = new WorkflowClient({
 const client = new QStashClient({ token: env.QSTASH_TOKEN });
 
 const BASE_URL = env.VERCEL_URL
-  ? `https://${env.VERCEL_URL}`
+  ? `${env.VERCEL_URL}`
   : `http://localhost:3000`;
 
 type EmailPayload = {
