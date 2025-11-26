@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 import { workflowClient } from "@/lib/workflow";
 import { env } from "@/env";
 
-
 interface SignUpInput {
   username: string;
   email: string;
@@ -44,8 +43,11 @@ export const signUp = async (formData: SignUpInput) => {
 
       await workflowClient.trigger({
         url: `${BASE_URL}/api/workflow/onboarding`,
-        body: {email: validatedData.email.toLocaleLowerCase(), name: validatedData.username}
-      })
+        body: {
+          email: validatedData.email.toLocaleLowerCase(),
+          name: validatedData.username,
+        },
+      });
 
       await db.user.create({
         data: {
@@ -54,7 +56,6 @@ export const signUp = async (formData: SignUpInput) => {
           password: hashedPassword,
         },
       });
-
     },
     successMessage: "Signed up successfully",
   });
