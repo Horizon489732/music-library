@@ -175,6 +175,60 @@
   --tracking-wide: calc(var(--tracking-normal) + 0.025em);
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+
+
+  
+  /* admin style */
+  --color-admin-background: var(--admin-background);
+  --color-admin-foreground: var(--admin-foreground);
+  --color-admin-card: var(--admin-card);
+  --color-admin-card-foreground: var(--admin-card-foreground);
+  --color-admin-popover: var(--admin-popover);
+  --color-admin-popover-foreground: var(--admin-popover-foreground);
+  --color-admin-primary: var(--admin-primary);
+  --color-admin-primary-foreground: var(--admin-primary-foreground);
+  --color-admin-secondary: var(--admin-secondary);
+  --color-admin-secondary-foreground: var(--admin-secondary-foreground);
+  --color-admin-muted: var(--admin-muted);
+  --color-admin-muted-foreground: var(--admin-muted-foreground);
+  --color-admin-accent: var(--admin-accent);
+  --color-admin-accent-foreground: var(--admin-accent-foreground);
+  --color-admin-destructive: var(--admin-destructive);
+  --color-admin-destructive-foreground: var(--admin-destructive-foreground);
+  --color-admin-border: var(--admin-border);
+  --color-admin-input: var(--admin-input);
+  --color-admin-ring: var(--admin-ring);
+  --color-admin-chart-1: var(--admin-chart-1);
+  --color-admin-chart-2: var(--admin-chart-2);
+  --color-admin-chart-3: var(--admin-chart-3);
+  --color-admin-chart-4: var(--admin-chart-4);
+  --color-admin-chart-5: var(--admin-chart-5);
+  --color-admin-sidebar: var(--admin-sidebar);
+  --color-admin-sidebar-foreground: var(--admin-sidebar-foreground);
+  --color-admin-sidebar-primary: var(--admin-sidebar-primary);
+  --color-admin-sidebar-primary-foreground: var(--admin-sidebar-primary-foreground);
+  --color-admin-sidebar-accent: var(--admin-sidebar-accent);
+  --color-admin-sidebar-accent-foreground: var(--admin-sidebar-accent-foreground);
+  --color-admin-sidebar-border: var(--admin-sidebar-border);
+  --color-admin-sidebar-ring: var(--admin-sidebar-ring);
+
+  --font-admin-sans: var(--admin-font-sans);
+  --font-admin-mono: var(--admin-font-mono);
+  --font-admin-serif: var(--admin-font-serif);
+
+  --radius-admin-sm: calc(var(--admin-radius) - 4px);
+  --radius-admin-md: calc(var(--admin-radius) - 2px);
+  --radius-admin-lg: var(--admin-radius);
+  --radius-admin-xl: calc(var(--admin-radius) + 4px);
+
+  --shadow-admin-2xs: var(--admin-shadow-2xs);
+  --shadow-admin-xs: var(--admin-shadow-xs);
+  --shadow-admin-sm: var(--admin-shadow-sm);
+  --shadow-admin: var(--admin-shadow);
+  --shadow-admin-md: var(--admin-shadow-md);
+  --shadow-admin-lg: var(--admin-shadow-lg);
+  --shadow-admin-xl: var(--admin-shadow-xl);
+  --shadow-admin-2xl: var(--admin-shadow-2xl);
 }
 
 @layer base {
