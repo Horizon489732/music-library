@@ -4,11 +4,7 @@ import SongVinyl from "./SongVinyl";
 const SongOverview = ({
   title,
   artist,
-  album,
-  rating,
-  genre,
-  total_copies,
-  available_copies,
+  likes,
   description,
   color,
   imageUrl,
@@ -23,12 +19,12 @@ const SongOverview = ({
           By <span className="text-secondary font-bold">{artist}</span>
         </p>
         <div className="text-muted-foreground mt-7 flex flex-row flex-wrap items-center gap-4 text-xl">
-          <p>
+          {/* <p>
             Genre: <span className="text-primary font-semibold">{genre}</span>
-          </p>
-          <p>
+          </p> */}
+          {/* <p>
             Album: <span className="text-primary font-semibold">{album}</span>
-          </p>
+          </p> */}
           <div className="flex flex-row items-center gap-1">
             <svg
               width="22"
@@ -45,10 +41,10 @@ const SongOverview = ({
                 strokeLinejoin="round"
               />
             </svg>
-            <p>{rating}</p>
+            <p>{likes.length}</p>
           </div>
 
-          <div className="flex flex-row flex-wrap gap-4">
+          {/* <div className="flex flex-row flex-wrap gap-4">
             <p>
               Total Copies: <span className="text-primary">{total_copies}</span>
             </p>
@@ -56,7 +52,7 @@ const SongOverview = ({
               Available Copies:{" "}
               <span className="text-primary">{available_copies}</span>
             </p>
-          </div>
+          </div> */}
 
           <p className="mt-2 text-justify text-xl">{description}</p>
           <Button className="!max-md:w-full mt-4 min-h-14 w-fit rounded-sm">

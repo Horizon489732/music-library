@@ -37,8 +37,8 @@ export const signUp = async (formData: SignUpInput) => {
       const validatedData = signUpSchema.parse(formData);
       const hashedPassword = await hash(validatedData.password, 10);
 
-      const BASE_URL = env.VERCEL_URL
-        ? `${env.VERCEL_URL}`
+      const BASE_URL = env.NEXT_APP_URL
+        ? `${env.NEXT_APP_URL}`
         : `http://localhost:3000`;
 
       await workflowClient.trigger({
