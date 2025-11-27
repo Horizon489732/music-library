@@ -5,11 +5,11 @@ const Page = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-4 text-center">
       <h1 className="mb-4 animate-pulse text-5xl font-bold">🛑 HOLD ON!</h1>
-      <p className="mb-6 text-xl">
+      <p className="mb-6 text-xl mt-15">
         Slow down, speedster! You’re moving faster than a caffeinated squirrel
         on roller skates. 🐿️🛼
       </p>
-      <p className="text-xl">
+      <p className="text-xl mb-6">
         We tried to catch you… but even our servers are like “bro, chill.” 😵‍💫
       </p>
       <Image
@@ -20,7 +20,7 @@ const Page = () => {
         unoptimized
         className="rounded-lg shadow-lg"
       />
-      <p className="text-sm">
+      <p className="text-sm mt-6">
         Recommendation: do a dramatic hair flip, sip some water, or question
         your life choices while you wait. 💃🕺
       </p>
