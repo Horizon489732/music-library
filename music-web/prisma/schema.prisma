@@ -20,7 +20,7 @@ enum Status {
 
 model User {
   id             String          @id @default(cuid())
-  name           String?         
+  name           String?
   email          String          @unique
   password       String
   passwordResets PasswordReset[]
@@ -28,8 +28,113 @@ model User {
   role           Role            @default(USER)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  Song           Song[]
+  Like           Like[]
+  Playlist       Playlist[]
+  Comments       Comments[]
 
   @@map("users")
+}
+
+model Song {
+  id          String  @id @default(cuid())
+  title       String
+  audioUrl    String?
+  imageUrl    String?
+  description String?
+  color       String  @default("#FFFFFF")
+  lyrics      String?
+
+  status       String             @default("queued")
+  isAISong     Boolean            @default(false)
+  duration     Float
+  instrumental Boolean            @default(false)
+  published    Boolean            @default(false)
+  listenCount  Int                @default(0)
+  likes        Like[]
+  categories   Category[]
+  comments     Comments[]
+  playlists    SongsOnPlaylists[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  //AI song properties
+  aiDetails   AISongDetails? @relation(fields: [aiDetailsId], references: [id])
+  aiDetailsId String?        @unique
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@index([audioUrl])
+}
+
+model AISongDetails {
+  id String @id @default(cuid())
+
+  prompt                String?
+  fullDescribedSong     String?
+  describedLyrics       String?
+  inferStep             Float?
+  guidanceScale         Float?
+  guidanceScaleText     Float?
+  guidanceScaleLyric    Float?
+  schedulerType         String?
+  useErgTag             Boolean
+  useErgLyric           Boolean
+  useErgDiffusion       Boolean
+  cfgType               String?
+  guidanceInterval      Float?
+  guidanceIntervalDecay Float?
+  seed                  Float?
+
+  song Song? @relation
+}
+
+model Like {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  songId    String
+  createdAt DateTime @default(now())
+
+  @@id([userId, songId])
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  songs Song[]
+}
+
+model Playlist {
+  id     String             @id @default(cuid())
+  user   User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  name   String
+  public Boolean            @default(false)
+  songs  SongsOnPlaylists[]
+
+  @@index([name])
+}
+
+model SongsOnPlaylists {
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  playlistId String
+  song       Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  songId     String
+  createdAt  DateTime @default(now())
+
+  @@id([playlistId, songId])
+}
+
+model Comments {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  songId    String
+  text      String
+  createdAt DateTime @default(now())
 }
 
 // for future use
@@ -40,6 +145,6 @@ model PasswordReset {
   expires DateTime
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("password_resets")
   @@index([expires])
+  @@map("password_resets")
 }
