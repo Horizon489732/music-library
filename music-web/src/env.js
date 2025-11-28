@@ -34,6 +34,20 @@ export const env = createEnv({
         ? z.string()
         : z.string().optional(),
     NEXT_APP_URL: z.string().url(),
+    GENERATE_FROM_DESCRIPTION_URL:
+      process.env.NODE_ENV === "production"
+        ? z.string().url()
+        : z.string().url().optional(),
+    GENERATE_FROM_DESCRIBED_LYRICS_URL:
+      process.env.NODE_ENV === "production"
+        ? z.string().url()
+        : z.string().url().optional(),
+    GENERATE_WITH_LYRICS_URL:
+      process.env.NODE_ENV === "production"
+        ? z.string().url()
+        : z.string().url().optional(),
+    MODAL_KEY: z.string(),
+    MODAL_SECRET: z.string(),
   },
 
   /**
@@ -60,6 +74,12 @@ export const env = createEnv({
     QSTASH_TOKEN: process.env.QSTASH_TOKEN,
     QSTASH_CURRENT_SIGNING_KEY: process.env.QSTASH_CURRENT_SIGNING_KEY,
     QSTASH_NEXT_SIGNING_KEY: process.env.QSTASH_NEXT_SIGNING_KEY,
+    GENERATE_FROM_DESCRIPTION_URL: process.env.GENERATE_FROM_DESCRIPTION_URL,
+    GENERATE_FROM_DESCRIBED_LYRICS_URL:
+      process.env.GENERATE_FROM_DESCRIBED_LYRICS_URL,
+    GENERATE_WITH_LYRICS_URL: process.env.GENERATE_WITH_LYRICS_URL,
+    MODAL_KEY: process.env.MODAL_KEY,
+    MODAL_SECRET: process.env.MODAL_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
