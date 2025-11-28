@@ -3,6 +3,9 @@
  * for Docker builds.
  */
 import "./src/env.js";
+import { fileURLToPath } from 'url';
+import path from 'path';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -17,6 +20,9 @@ const config = {
         hostname: "media.giphy.com",
       },
     ],
+  },
+  turbopack: {
+    root: __dirname,
   },
 };
 

@@ -1,17 +1,17 @@
-interface Like {
+interface LikeType {
   user: string;
   song: string;
   createdAt: string;
 }
-interface Playlist {
+interface PlaylistType {
   id: string;
   name: string;
   user: string;
   public: boolean;
-  songs: Song[];
+  songs: SongType[];
 }
 
-interface Comment {
+interface CommentType {
   id: string;
   user: string;
   song: string;
@@ -19,11 +19,11 @@ interface Comment {
   createdAt: string;
 }
 
-interface Song {
-  id: string;              
-  title: string;           
-  audioUrl?: string;       
-  imageUrl?: string;      
+interface SongType {
+  id: string;
+  title: string;
+  audioUrl?: string;
+  imageUrl?: string;
   creator: string;
   description?: string;
   color: string;
@@ -32,19 +32,19 @@ interface Song {
   status: string;
   isAISong: boolean;
   instrumental: boolean;
-  duration: number;         
+  duration: number;
   published: boolean;
   listenCount: number;
-  likes?: Like[];  
-  playlists?: Playlist[];
-  comments?: Comment[];
+  likes?: LikeType[];
+  playlists?: PlaylistType[];
+  comments?: CommentType[];
   tags?: string[]; //categories in the database
 
   // Optional AI songs properties
-  prompt?: string;  
+  prompt?: string;
   fullDescribedSong?: string;
-  describedLyrics?: string; 
-  inferStep?: number;      
+  describedLyrics?: string;
+  inferStep?: number;
   guidanceScale?: number;
   guidanceScaleText?: number;
   guidanceScaleLyric?: number;
@@ -57,6 +57,6 @@ interface Song {
   seed?: number;
   cfgType?: string;
 
-  createdAt: string;         
-  updatedAt: string;    
+  createdAt: string;
+  updatedAt: string;
 }

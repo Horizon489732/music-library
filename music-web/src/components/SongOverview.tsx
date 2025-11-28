@@ -3,10 +3,12 @@ import SongVinyl from "./SongVinyl";
 
 const SongOverview = ({
   title,
-  artist,
+  creator,
   likes,
   description,
   color,
+  listenCount,
+  tags,
   imageUrl,
 }: SongType) => {
   return (
@@ -16,52 +18,77 @@ const SongOverview = ({
           {title}
         </h1>
         <p className="text-xl">
-          By <span className="text-secondary font-bold">{artist}</span>
+          By <span className="text-secondary font-bold">{creator}</span>
         </p>
         <div className="text-muted-foreground mt-7 flex flex-row flex-wrap items-center gap-4 text-xl">
-          {/* <p>
-            Genre: <span className="text-primary font-semibold">{genre}</span>
-          </p> */}
-          {/* <p>
-            Album: <span className="text-primary font-semibold">{album}</span>
-          </p> */}
+          <div className="flex flex-row items-center gap-2">
+            <svg
+              className="size-5 text-primary"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <g>
+                <path
+                  fill="currentColor"
+                  d="M175.898,335.919c-3.812-25.66-27.679-43.357-53.33-39.546c-25.659,3.778-43.374,27.671-39.57,53.322
+                l18.12,122.236c3.804,25.65,27.671,43.365,53.33,39.554c25.651-3.795,43.357-27.662,39.562-53.33L175.898,335.919z"
+                />
+                <path
+                  fill="currentColor"
+                  d="M389.438,296.373c-25.651-3.811-49.518,13.886-53.33,39.546l-18.121,122.236
+                c-3.786,25.667,13.911,49.535,39.571,53.33c25.65,3.812,49.518-13.903,53.33-39.554l18.12-122.236
+                C432.811,324.044,415.088,300.151,389.438,296.373z"
+                />
+                <path
+                  fill="currentColor"
+                  d="M506.813,166.683l-11.106-21.231c-22.6-43.187-56.364-79.478-97.625-105.07
+                C356.864,14.799,307.997-0.009,256.003,0C204-0.009,155.132,14.799,113.914,40.382c-41.26,25.592-75.025,61.883-97.616,105.07
+                L5.192,166.683c-4.301,8.224-1.14,18.391,7.099,22.701l7.649,3.99c-7.952,24.315-12.322,50.262-12.322,77.247
+                c0.042,31.753,7.353,62.948,15.594,90.551c8.231,27.476,17.57,51.707,21.965,67.402l35.683-10.074
+                c-5.29-18.593-14.384-42.004-22.152-67.959c-7.767-25.87-14.055-53.98-14.004-79.919c0-20.791,3.034-40.838,8.621-59.803
+                l1.436,0.777c8.24,4.285,18.391,1.116,22.692-7.116l11.105-21.239c15.788-30.198,39.512-55.679,68.332-73.538
+                c28.828-17.859,62.567-28.136,99.112-28.144c36.536,0.008,70.284,10.286,99.112,28.144c28.813,17.858,52.536,43.34,68.324,73.538
+                l11.106,21.239c4.302,8.231,14.461,11.4,22.693,7.116l1.437-0.777c5.586,18.965,8.628,39.012,8.628,59.803
+                c0.042,25.938-6.237,54.049-14.012,79.919c-7.759,25.955-16.861,49.366-22.152,67.959l35.683,10.074
+                c4.395-15.695,13.734-39.926,21.966-67.402c8.24-27.602,15.559-58.798,15.592-90.551c0-26.986-4.37-52.932-12.322-77.247
+                l7.649-3.99C507.945,185.074,511.107,174.907,506.813,166.683z"
+                />
+              </g>
+            </svg>
+            <p>{listenCount}</p>
+          </div>
           <div className="flex flex-row items-center gap-1">
             <svg
-              width="22"
-              height="22"
-              viewBox="0 0 22 22"
+              className="size-8 text-primary"
+              viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M10.5232 3.20745C10.5619 3.11288 10.628 3.03198 10.7128 2.97504C10.7977 2.9181 10.8976 2.8877 10.9998 2.8877C11.102 2.8877 11.2019 2.9181 11.2868 2.97504C11.3717 3.03198 11.4377 3.11288 11.4765 3.20745L13.4244 7.89253C13.4609 7.9802 13.5208 8.05611 13.5976 8.1119C13.6745 8.1677 13.7652 8.20122 13.8598 8.20878L18.918 8.61395C19.3754 8.65062 19.5606 9.2217 19.2122 9.51962L15.3586 12.8215C15.2866 12.883 15.2329 12.9633 15.2035 13.0533C15.1741 13.1434 15.17 13.2398 15.1917 13.332L16.3697 18.2683C16.3933 18.3673 16.3871 18.4711 16.3518 18.5667C16.3165 18.6622 16.2537 18.7451 16.1713 18.8049C16.0889 18.8647 15.9907 18.8988 15.8889 18.9028C15.7872 18.9068 15.6865 18.8806 15.5997 18.8275L11.2684 16.1829C11.1875 16.1335 11.0946 16.1073 10.9998 16.1073C10.9051 16.1073 10.8121 16.1335 10.7312 16.1829L6.39999 18.8284C6.31314 18.8815 6.21249 18.9078 6.11074 18.9037C6.009 18.8997 5.91072 18.8657 5.82833 18.8058C5.74594 18.746 5.68312 18.6631 5.64782 18.5676C5.61252 18.4721 5.60632 18.3682 5.62999 18.2692L6.80791 13.332C6.82975 13.2398 6.82574 13.1434 6.7963 13.0533C6.76687 12.9632 6.71316 12.883 6.64107 12.8215L2.78741 9.51962C2.70981 9.45347 2.65358 9.36577 2.62585 9.26764C2.59813 9.16951 2.60015 9.06536 2.63166 8.96838C2.66317 8.8714 2.72275 8.78595 2.80285 8.72286C2.88296 8.65976 2.97999 8.62186 3.08166 8.61395L8.13983 8.20878C8.23447 8.20122 8.32519 8.1677 8.40202 8.1119C8.47884 8.05611 8.53878 7.9802 8.57524 7.89253L10.5232 3.20745Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M15.0501 7.04419C15.4673 5.79254 14.5357 4.5 13.2163 4.5C12.5921 4.5 12.0062 4.80147 11.6434 5.30944L8.47155 9.75H5.85748L5.10748 10.5V18L5.85748 18.75H16.8211L19.1247 14.1428C19.8088 12.7747 19.5406 11.1224 18.4591 10.0408C17.7926 9.37439 16.8888 9 15.9463 9H14.3981L15.0501 7.04419ZM9.60751 10.7404L12.864 6.1813C12.9453 6.06753 13.0765 6 13.2163 6C13.5118 6 13.7205 6.28951 13.627 6.56984L12.317 10.5H15.9463C16.491 10.5 17.0133 10.7164 17.3984 11.1015C18.0235 11.7265 18.1784 12.6814 17.7831 13.472L15.8941 17.25H9.60751V10.7404ZM8.10751 17.25H6.60748V11.25H8.10751V17.25Z"
+                fill="currentColor"
               />
             </svg>
-            <p>{likes.length}</p>
+            <p>{likes?.length}</p>
           </div>
 
-          {/* <div className="flex flex-row flex-wrap gap-4">
-            <p>
-              Total Copies: <span className="text-primary">{total_copies}</span>
-            </p>
-            <p>
-              Available Copies:{" "}
-              <span className="text-primary">{available_copies}</span>
-            </p>
-          </div> */}
+          <div className="flex flex-row flex-wrap gap-4">
+            <span className="text-accent italic">Tags:</span>
+            {tags?.map((tag) => (
+              <p key={tag} className="text-muted-foreground/70 italic">{tag}</p>
+            ))}
+          </div>
 
           <p className="mt-2 text-justify text-xl">{description}</p>
-          <Button className="!max-md:w-full mt-4 min-h-14 w-fit rounded-sm">
+          
+          <Button className="!max-md:w-full mt-4 min-h-14 w-fit rounded-sm group cursor-pointer">
             <svg
+              className="size-6 transition-transform duration-500 ease-in-out group-hover:rotate-360"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 512 512"
-              width="22"
-              height="22"
             >
               <g>
                 <path
@@ -83,7 +110,7 @@ const SongOverview = ({
                 />
               </g>
             </svg>
-            <p className="font-mono text-xl">Rent CD</p>
+            <p className="font-mono text-xl relative transition-transform duration-500 ease-in-out group-hover:-top-0.5 group-hover:-right-0.5 group-hover:scale-103">Have a listen</p>
           </Button>
         </div>
       </div>
