@@ -6,7 +6,7 @@ interface Props {
 }
 
 const SongCard = ({ song }: Props) => {
-  const { id, title, genre, color, imageUrl } = song;
+  const { id, title, tags, color, imageUrl } = song;
 
   return (
     <li>
@@ -17,7 +17,7 @@ const SongCard = ({ song }: Props) => {
             {title}
           </p>
           <p className="text-muted-foreground xs:text-base mt-1 line-clamp-1 text-sm italic">
-            {genre}
+             {tags?.map(tag => tag.charAt(0).toUpperCase() + tag.slice(1)).join(" ")}
           </p>
         </div>
       </Link>

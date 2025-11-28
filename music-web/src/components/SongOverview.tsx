@@ -23,7 +23,7 @@ const SongOverview = ({
         <div className="text-muted-foreground mt-7 flex flex-row flex-wrap items-center gap-4 text-xl">
           <div className="flex flex-row items-center gap-2">
             <svg
-              className="size-5 text-primary"
+              className="text-primary size-5"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
@@ -59,7 +59,7 @@ const SongOverview = ({
           </div>
           <div className="flex flex-row items-center gap-1">
             <svg
-              className="size-8 text-primary"
+              className="text-primary size-8"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -77,13 +77,15 @@ const SongOverview = ({
           <div className="flex flex-row flex-wrap gap-4">
             <span className="text-accent italic">Tags:</span>
             {tags?.map((tag) => (
-              <p key={tag} className="text-muted-foreground/70 italic">{tag}</p>
+              <p key={tag} className="text-muted-foreground/70 italic">
+                {tag}
+              </p>
             ))}
           </div>
 
           <p className="mt-2 text-justify text-xl">{description}</p>
-          
-          <Button className="!max-md:w-full mt-4 min-h-14 w-fit rounded-sm group cursor-pointer">
+
+          <Button className="!max-md:w-full group mt-4 min-h-14 w-fit cursor-pointer rounded-sm">
             <svg
               className="size-6 transition-transform duration-500 ease-in-out group-hover:rotate-360"
               xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +112,9 @@ const SongOverview = ({
                 />
               </g>
             </svg>
-            <p className="font-mono text-xl relative transition-transform duration-500 ease-in-out group-hover:-top-0.5 group-hover:-right-0.5 group-hover:scale-103">Have a listen</p>
+            <p className="relative font-mono text-xl transition-transform duration-500 ease-in-out group-hover:-top-0.5 group-hover:-right-0.5 group-hover:scale-103">
+              Have a listen
+            </p>
           </Button>
         </div>
       </div>
