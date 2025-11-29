@@ -8,7 +8,6 @@ type InitialData = {
   songId: string;
 };
 
-
 export const { POST } = serve<InitialData>(async (context) => {
   const { userId, songId } = context.requestPayload;
 
@@ -38,7 +37,9 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   if (song.status === "processing") {
     console.log(`Song ${songId} is already processing. Aborting generation.`);
-    throw new WorkflowNonRetryableError("Song is already processing. Aborting generation");
+    throw new WorkflowNonRetryableError(
+      "Song is already processing. Aborting generation",
+    );
   }
 
   //change the status to processing
@@ -49,7 +50,9 @@ export const { POST } = serve<InitialData>(async (context) => {
     });
 
     if (!updatedSong) {
-      return { error: "Song is already processing" };
+      throw new WorkflowNonRetryableError(
+        "Song does not exist or is already processing",
+      );
     }
   });
 

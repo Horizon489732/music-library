@@ -119,7 +119,7 @@ export const adminSideBarLinks = [
 const Sidebar = ({ session }: { session: Session }) => {
   const pathname = usePathname();
   return (
-    <div className="sticky top-0 left-0 flex h-dvh flex-col justify-between border-r-2 px-5 pt-10 pb-5">
+    <div className="sticky top-0 left-0 flex h-dvh flex-col justify-between border-r-2 px-5 pt-10 pb-5 max-md:px-2">
       <div>
         <div className="border-admin-primary flex flex-row items-center gap-2 border-b-4 border-dashed pb-10 max-md:justify-center">
           <Link href="/">
@@ -142,9 +142,9 @@ const Sidebar = ({ session }: { session: Session }) => {
               <Link href={link.route} key={link.route}>
                 <div
                   className={cn(
-                    "hover:bg-admin-accent/30 flex w-full flex-row items-center gap-2 rounded-lg px-5 py-3.5 duration-100 ease-in-out max-md:justify-center",
+                    "hover:bg-admin-accent/30 flex w-full flex-row items-center gap-2 rounded-lg px-5 py-3.5 duration-100 ease-in-out max-md:justify-center max-md:px-2 max-md:py-3.5",
                     isSelected &&
-                      "bg-admin-primary shadow-admin-sm hover:bg-admin-primary",
+                      "bg-admin-primary shadow-admin-sm hover:bg-admin-primary max-md:shadow-none",
                   )}
                 >
                   <div
