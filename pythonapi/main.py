@@ -6,9 +6,8 @@ from typing import List
 import boto3
 import modal
 import requests
-from pydantic import BaseModel
-
 from prompts import LYRICS_GENERATOR_PROMPT, PROMPT_GENERATOR_PROMPT
+from pydantic import BaseModel
 
 MODAL_KEY = ""
 MODAL_SECRET = ""
@@ -50,7 +49,7 @@ class AudioGenerationBase(BaseModel):
     use_erg_diffusion: bool = True
     cfg_type: str = "apg"  # can be "apg" or "cfg"
     guidance_interval: float = 0.5
-    guidance_interval_decay: float = 0
+    guidance_interval_decay: float = 0.0
 
 
 class GenerateFromDescriptionRequest(AudioGenerationBase):
@@ -308,21 +307,11 @@ class MusicGenServer:
 @app.local_entrypoint()
 def main():
     server = MusicGenServer()
-    endpoint_url = server.generate_with_described_lyrics.get_web_url()
+    endpoint_url = server.generate_from_desc.get_web_url()
 
-    request_data = GenerateWithDescribedLyricsRequest(
-        prompt="synthwave, retro, 100 BPM, electronic, neon vibes",
-        described_lyrics="lyrics about ambition, money, and surviving tough times",
-        guidance_scale=13,
-        guidance_scale_text=12,
-        guidance_scale_lyrics=14,
-        scheduler_type="euler",
-        use_erg_tag=True,
-        use_erg_lyric=True,
-        use_erg_diffusion=True,
-        cfg_type="cfg",
-        guidance_interval=1.0,
-        guidance_interval_decay=0.5,
+    request_data = GenerateFromDescriptionRequest(
+        full_described_song="A happy, upbeat song for testing",
+        use_erg_tag=False,
     )
 
     headers = {
@@ -331,6 +320,8 @@ def main():
     }
 
     payload = request_data.model_dump()
+
+    # print("endpoint url: ", endpoint_url, "payload: ", payload, "headers: ", headers)
 
     response = requests.post(endpoint_url, json=payload, headers=headers)
     response.raise_for_status()

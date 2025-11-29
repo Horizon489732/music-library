@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { type Session } from "next-auth";
+import { generateSong } from "@/lib/actions/songGeneration";
 
 export const HomeHeader = () => {
   const pathname = usePathname();
@@ -31,6 +32,8 @@ export const HomeHeader = () => {
             Library
           </Link>
         </li>
+
+        <button onClick={generateSong}>song</button>
 
         <li>
           <Link href="user-profile">

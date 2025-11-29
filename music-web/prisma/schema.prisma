@@ -47,7 +47,7 @@ model Song {
 
   status       String             @default("queued")
   isAISong     Boolean            @default(false)
-  duration     Float
+  duration     Float              @default(150.0)
   instrumental Boolean            @default(false)
   published    Boolean            @default(false)
   listenCount  Int                @default(0)
@@ -74,18 +74,18 @@ model AISongDetails {
   prompt                String?
   fullDescribedSong     String?
   describedLyrics       String?
-  inferStep             Float?
-  guidanceScale         Float?
-  guidanceScaleText     Float?
-  guidanceScaleLyric    Float?
-  schedulerType         String?
-  useErgTag             Boolean
-  useErgLyric           Boolean
-  useErgDiffusion       Boolean
-  cfgType               String?
-  guidanceInterval      Float?
-  guidanceIntervalDecay Float?
-  seed                  Float?
+  inferStep             Int     @default(60)
+  guidanceScale         Float   @default(15.0)
+  guidanceScaleText     Float   @default(0.0)
+  guidanceScaleLyric    Float   @default(0.0)
+  schedulerType         String  @default("euler")
+  useErgTag             Boolean @default(true)
+  useErgLyric           Boolean @default(true)
+  useErgDiffusion       Boolean @default(true)
+  cfgType               String  @default("apg")
+  guidanceInterval      Float   @default(0.5)
+  guidanceIntervalDecay Float   @default(0.0)
+  seed                  Float   @default(-1)
 
   song Song? @relation
 }

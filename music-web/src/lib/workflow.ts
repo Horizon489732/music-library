@@ -1,7 +1,6 @@
 import { env } from "@/env";
 import { Client as WorkflowClient } from "@upstash/workflow";
 import { Client as QStashClient } from "@upstash/qstash";
-import { console } from "inspector";
 
 export const workflowClient = new WorkflowClient({
   baseUrl: env.QSTASH_URL,

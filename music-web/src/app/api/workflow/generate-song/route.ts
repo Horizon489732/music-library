@@ -1,14 +1,18 @@
 import { db } from "@/server/db";
 import { env } from "@/env";
 import { serve } from "@upstash/workflow/nextjs";
+import { WorkflowNonRetryableError } from "@upstash/workflow";
 
 type InitialData = {
   userId: string;
   songId: string;
 };
 
+
 export const { POST } = serve<InitialData>(async (context) => {
   const { userId, songId } = context.requestPayload;
+
+  console.log("In generate-song", "userId: ", userId, "songId: ", songId);
 
   //checking environment variables
   if (
@@ -21,6 +25,7 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   //get the song
   const song = await context.run("fetch-song", async () => {
+    console.log("Inside fetch-song workflow step", "songId:", songId);
     return await db.song.findUniqueOrThrow({
       where: { id: songId },
       include: { aiDetails: true },
@@ -28,21 +33,24 @@ export const { POST } = serve<InitialData>(async (context) => {
   });
 
   if (!song) {
-    return new Response(JSON.stringify({ error: "Song not found" }), {
-      status: 404,
-    });
+    throw new WorkflowNonRetryableError("Song does not exist!");
   }
 
   if (song.status === "processing") {
-    return new Response(JSON.stringify({ queued: true }), { status: 200 });
+    console.log(`Song ${songId} is already processing. Aborting generation.`);
+    throw new WorkflowNonRetryableError("Song is already processing. Aborting generation");
   }
 
   //change the status to processing
   await context.run("set-processing", async () => {
-    await db.song.update({
-      where: { id: songId },
+    const updatedSong = await db.song.update({
+      where: { id: songId, status: "queued" },
       data: { status: "processing" },
     });
+
+    if (!updatedSong) {
+      return { error: "Song is already processing" };
+    }
   });
 
   type RequestPayload = {
@@ -87,14 +95,12 @@ export const { POST } = serve<InitialData>(async (context) => {
   let bodyPayload: RequestPayload = {};
 
   if (song.aiDetails?.fullDescribedSong) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     endpoint = env.GENERATE_FROM_DESCRIPTION_URL;
     bodyPayload = {
       full_described_song: song.aiDetails.fullDescribedSong,
       ...commonParams,
     };
   } else if (song.lyrics && song.aiDetails?.prompt) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     endpoint = env.GENERATE_WITH_LYRICS_URL;
     bodyPayload = {
       lyrics: song.lyrics,
@@ -102,7 +108,6 @@ export const { POST } = serve<InitialData>(async (context) => {
       ...commonParams,
     };
   } else if (song.aiDetails?.describedLyrics && song.aiDetails.prompt) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     endpoint = env.GENERATE_FROM_DESCRIBED_LYRICS_URL;
     bodyPayload = {
       described_lyrics: song.aiDetails.describedLyrics,
@@ -110,25 +115,30 @@ export const { POST } = serve<InitialData>(async (context) => {
       ...commonParams,
     };
   } else {
-    throw new Error("No valid generation mode detected.");
+    throw new WorkflowNonRetryableError("No valid generation mode detected.");
   }
 
+  console.log(
+    "Calling AI endpoint",
+    endpoint,
+    "with body:",
+    JSON.stringify(bodyPayload),
+  );
   //calling AI endpoints
   const response = await context.call("generate-song", {
     url: endpoint,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       "Modal-Key": env.MODAL_KEY,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       "Modal-Secret": env.MODAL_SECRET,
     },
-    body: JSON.stringify(bodyPayload),
+    retries: 1,
+    body: bodyPayload,
   });
 
   if (response.status >= 400) {
-    throw new Error("Song generation failed");
+    throw new WorkflowNonRetryableError("No valid generation mode detected.");
   }
 
   const responseData = response.body as {
