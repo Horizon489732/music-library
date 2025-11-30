@@ -77,7 +77,10 @@ const SongOverview = ({
           <div className="flex flex-row flex-wrap gap-4">
             <span className="text-accent italic">Tags:</span>
             {tags?.map((tag) => (
-              <p key={tag} className="text-muted-foreground/70 italic">
+              <p
+                key={tag}
+                className="text-muted-foreground/70 dark:text-muted-foreground italic"
+              >
                 {tag}
               </p>
             ))}

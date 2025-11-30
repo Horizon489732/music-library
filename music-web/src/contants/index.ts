@@ -12,6 +12,22 @@ export const FIELD_TYPES = {
   confirmPassword: "password",
 };
 
+export const inspirationTags = [
+  "Hip-Hop/Rap",
+  "Rock",
+  "EDM",
+  "Pop",
+  "Country",
+  "R&B",
+  "Jazz",
+  "Classical",
+  "Metal",
+  "Folk",
+  "Blues",
+  "Soul",
+  "Punk",
+];
+
 export const sampleSongs = [
   {
     id: "1",

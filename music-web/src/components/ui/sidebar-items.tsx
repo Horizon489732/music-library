@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Calendar, Home, Inbox } from "lucide-react";
+import { Music, Home, Upload } from "lucide-react";
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import Link from "next/link";
 
@@ -14,14 +14,14 @@ const SidebarItems = () => {
       icon: Home,
     },
     {
-      title: "Inbox",
+      title: "Upload",
       url: "/user-profile/upload-song",
-      icon: Inbox,
+      icon: Upload,
     },
     {
-      title: "Calendar",
+      title: "Create",
       url: "/user-profile/create-song",
-      icon: Calendar,
+      icon: Music,
     },
   ];
 

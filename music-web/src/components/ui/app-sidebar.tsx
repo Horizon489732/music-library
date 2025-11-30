@@ -18,21 +18,22 @@ export function AppSidebar({ session }: { session?: Session | null }) {
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="h-full">
           <SidebarGroupLabel className="text-primary mt-4 mb-12 flex items-center pl-4 text-4xl font-extrabold tracking-widest uppercase">
             <Link href="/">Music</Link>
           </SidebarGroupLabel>
 
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarItems />
-            </SidebarMenu>
-
+          <div className="flex h-full flex-col justify-between">
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarItems />
+              </SidebarMenu>
+            </SidebarGroupContent>
             <LogoutBtn />
-          </SidebarGroupContent>
+          </div>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="border-t-1">
         <div className="mb-2 flex w-full items-center gap-5">
           <Avatar className="shadow-sm">
             <AvatarFallback className="bg-primary text-primary-foreground">
@@ -41,10 +42,13 @@ export function AppSidebar({ session }: { session?: Session | null }) {
           </Avatar>
 
           <div>
-            <p className="text-primary text-base font-semibold">{session?.user?.name}</p>
-            <p className="text-muted-foreground text-sm">{session?.user?.email}</p>
+            <p className="text-primary text-base font-semibold">
+              {session?.user?.name}
+            </p>
+            <p className="text-muted-foreground text-sm">
+              {session?.user?.email}
+            </p>
           </div>
-
         </div>
       </SidebarFooter>
     </Sidebar>
