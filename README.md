@@ -27,7 +27,7 @@ It includes a music player, AI generation workflows, and a full admin dashboard 
 
 ## 🛠️ Tech Stack
 
-### Frontend
+### Frontend (T3-Stack)
 - **Next.js**
 - **TypeScript**
 - **Tailwind CSS**
