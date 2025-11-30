@@ -56,26 +56,24 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <AppSidebar session={session} />
-      <SidebarInset className="flex h-screen flex-col">
-        <main className="flex-1 overflow-y-auto">
-          <header className="sticky top-0 z-10 border-b-1 px-4 py-2">
-            <div className="flex shrink-0 grow items-center gap-2">
-              <SidebarTrigger className="-ml-1" />
-              <SidebarSeparator
-                orientation="vertical"
-                className="mr-2 data-[orientation=vertical]:h-4"
-              />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbClient />
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </header>
-          <div>{children}</div>
-        </main>
+      <SidebarInset className="flex h-screen w-1 flex-col">
+        <header className="sticky top-0 z-10 border-b px-4 py-2">
+          <div className="flex shrink-0 grow items-center gap-2">
+            <SidebarTrigger className="-ml-1" />
+            <SidebarSeparator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbClient />
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
