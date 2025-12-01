@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/button-group";
 import { toast } from "sonner";
 import { generateSong } from "@/lib/actions/songGeneration";
-import { GenerateSongRequest } from "@/lib/actions/songGeneration";
+import { type GenerateSongRequest } from "@/lib/actions/songGeneration";
 
 const SongGenerator = () => {
   const [generationMode, setGenerationMode] = useState<"simple" | "custom">(
@@ -52,22 +52,22 @@ const SongGenerator = () => {
       return;
     }
     let requestBody: GenerateSongRequest = {
-          inferStep: 30,
-          guidanceScale: 3.5,
-          guidanceScaleText: 2,
-          guidanceScaleLyric: 2,
-          schedulerType: "euler",
-          useErgTag: false,
-          useErgLyric: false,
-          useErgDiffusion: false,
-          guidanceInterval: 0.5,
-          guidanceIntervalDecay: 0,
-          seed: 42,
-          cfgType: "apg",
-          audioDuration: 150,
-          instrumental: instrumental,
+      inferStep: 30,
+      guidanceScale: 3.5,
+      guidanceScaleText: 2,
+      guidanceScaleLyric: 2,
+      schedulerType: "euler",
+      useErgTag: false,
+      useErgLyric: false,
+      useErgDiffusion: false,
+      guidanceInterval: 0.5,
+      guidanceIntervalDecay: 0,
+      seed: 42,
+      cfgType: "apg",
+      audioDuration: 150,
+      instrumental: instrumental,
     };
-     if (generationMode === "simple") {
+    if (generationMode === "simple") {
       requestBody = {
         ...requestBody,
         fullDescribedSong: description,

@@ -1,5 +1,5 @@
-import SongList from "@/components/SongList";
-import SongOverview from "@/components/SongOverview";
+import SongList from "@/components/song-related/SongList";
+import SongOverview from "@/components/song-related/SongOverview";
 
 import { sampleSongs } from "@/contants";
 

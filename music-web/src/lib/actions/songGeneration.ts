@@ -3,6 +3,8 @@ import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { enqueueSong } from "../workflow";
 import { db } from "@/server/db";
+import { headers } from "next/headers";
+import ratelimit from "@/lib/ratelimit";
 
 export interface GenerateSongRequest {
   prompt?: string;
@@ -26,6 +28,15 @@ export interface GenerateSongRequest {
 }
 
 export const generateSong = async (request: GenerateSongRequest) => {
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const ipAddress = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+
+  const { success } = await ratelimit.limit(ipAddress);
+
+  if (!success) {
+    return redirect("/hold-on");
+  }
+
   const session = await auth();
   const userId = session?.user?.id;
 
