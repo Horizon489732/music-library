@@ -15,6 +15,7 @@ import {
 import { toast } from "sonner";
 import { generateSong } from "@/lib/actions/songGeneration";
 import { type GenerateSongRequest } from "@/lib/actions/songGeneration";
+import SongCreation from "./SongCreation";
 
 const SongGenerator = () => {
   const [generationMode, setGenerationMode] = useState<"simple" | "custom">(
@@ -26,6 +27,7 @@ const SongGenerator = () => {
   const [tagInput, setTagInput] = useState("");
   const [lyricMode, setLyricMode] = useState<"auto" | "manual">("manual");
   const [loading, setLoading] = useState(false);
+  const [workflowId, setWorkflowId] = useState("");
 
   const handleTagsClick = (tag: string) => {
     const currentTags = tagInput
@@ -91,7 +93,8 @@ const SongGenerator = () => {
 
     try {
       setLoading(true);
-      await generateSong(requestBody);
+      const res = await generateSong(requestBody) as string;
+      setWorkflowId(res);
       setDescription("");
       setLyric("");
       setTagInput("");
@@ -224,6 +227,8 @@ const SongGenerator = () => {
           <Button className="w-full" onClick={handleCreate} disabled={loading}>
             {loading ? "Create..." : "Create"}
           </Button>
+
+          <SongCreation />
         </div>
       </div>
     </div>

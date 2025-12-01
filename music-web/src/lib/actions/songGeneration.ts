@@ -5,6 +5,7 @@ import { enqueueSong } from "../workflow";
 import { db } from "@/server/db";
 import { headers } from "next/headers";
 import ratelimit from "@/lib/ratelimit";
+import { redis } from "@/server/redis";
 
 export interface GenerateSongRequest {
   prompt?: string;
@@ -93,4 +94,8 @@ export const generateSong = async (request: GenerateSongRequest) => {
     userId: userId,
     songId: song.id,
   });
+  
+  const workflowRunId = await redis.get(song.id);
+
+  return workflowRunId;
 };

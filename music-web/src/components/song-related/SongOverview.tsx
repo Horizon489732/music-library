@@ -1,5 +1,5 @@
-import { Button } from "./ui/button";
-import SongVinyl from "./SongVinyl";
+import SongVinyl from "@/components/song-related/SongVinyl";
+import { Button } from "@/components/ui/button";
 
 const SongOverview = ({
   title,

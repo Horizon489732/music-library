@@ -1,7 +1,9 @@
 import { db } from "@/server/db";
+import { redis } from "@/server/redis";
 import { env } from "@/env";
 import { serve } from "@upstash/workflow/nextjs";
 import { WorkflowNonRetryableError } from "@upstash/workflow";
+import { realtime } from "@/lib/realtime/realtime";
 
 type InitialData = {
   userId: string;
@@ -10,6 +12,10 @@ type InitialData = {
 
 export const { POST } = serve<InitialData>(async (context) => {
   const { userId, songId } = context.requestPayload;
+  const workflowRunId = context.workflowRunId;
+
+  await redis.set(songId, workflowRunId);
+  const channel = realtime.channel(workflowRunId);
 
   //checking environment variables
   if (
@@ -45,6 +51,11 @@ export const { POST } = serve<InitialData>(async (context) => {
     await db.song.update({
       where: { id: songId },
       data: { status: "processing" },
+    });
+
+    await channel.emit("workflow.stepFinish", {
+      stepName: "set-processing",
+      result: "processing song",
     });
   });
 
@@ -165,9 +176,13 @@ export const { POST } = serve<InitialData>(async (context) => {
         },
       },
     });
+
+    await channel.emit("workflow.stepFinish", {
+      stepName: "done-processing",
+      result: "finalizing song",
+    });
   });
 
-  return new Response(JSON.stringify({ success: true, userId, songId }), {
-    status: 200,
-  });
+  await context.run("run-finish", () => channel.emit("workflow.runFinish", {}));
+  return { success: true, userId, songId, workflowRunId };
 });

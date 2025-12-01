@@ -38,8 +38,6 @@ export async function POST(req: Request) {
       songId: string;
     };
 
-    console.log("In process-song", "userId: ", userId, "songId: ", songId);
-
     //trigger Upstash workflow
     await workflowClient.trigger({
       url: `${BASE_URL}/api/workflow/generate-song`,
