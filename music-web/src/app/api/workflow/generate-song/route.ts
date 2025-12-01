@@ -11,8 +11,6 @@ type InitialData = {
 export const { POST } = serve<InitialData>(async (context) => {
   const { userId, songId } = context.requestPayload;
 
-  console.log("In generate-song", "userId: ", userId, "songId: ", songId);
-
   //checking environment variables
   if (
     !env.GENERATE_FROM_DESCRIPTION_URL ||
@@ -44,16 +42,10 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   //change the status to processing
   await context.run("set-processing", async () => {
-    const updatedSong = await db.song.update({
-      where: { id: songId, status: "queued" },
+    await db.song.update({
+      where: { id: songId },
       data: { status: "processing" },
     });
-
-    if (!updatedSong) {
-      throw new WorkflowNonRetryableError(
-        "Song does not exist or is already processing",
-      );
-    }
   });
 
   type RequestPayload = {
@@ -141,6 +133,13 @@ export const { POST } = serve<InitialData>(async (context) => {
   });
 
   if (response.status >= 400) {
+    console.error(
+      `Song generation failed for songId: ${songId}, Response status: ${response.status}`,
+    );
+    await db.song.update({
+      where: { id: songId },
+      data: { status: "failed" },
+    });
     throw new WorkflowNonRetryableError("No valid generation mode detected.");
   }
 

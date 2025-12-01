@@ -12,6 +12,9 @@ import {
   ButtonGroup,
   ButtonGroupSeparator,
 } from "@/components/ui/button-group";
+import { toast } from "sonner";
+import { generateSong } from "@/lib/actions/songGeneration";
+import { GenerateSongRequest } from "@/lib/actions/songGeneration";
 
 const SongGenerator = () => {
   const [generationMode, setGenerationMode] = useState<"simple" | "custom">(
@@ -20,20 +23,83 @@ const SongGenerator = () => {
   const [description, setDescription] = useState("");
   const [instrumental, setInstrumental] = useState(false);
   const [lyric, setLyric] = useState("");
+  const [tagInput, setTagInput] = useState("");
   const [lyricMode, setLyricMode] = useState<"auto" | "manual">("manual");
+  const [loading, setLoading] = useState(false);
 
   const handleTagsClick = (tag: string) => {
-    const currentTags = description
+    const currentTags = tagInput
       .split(", ")
       .map((s) => s.trim())
       .filter((s) => s); //filtering out empty strings
 
     if (!currentTags.includes(tag)) {
-      if (description.trim() === "") {
-        setDescription(tag);
+      if (tagInput.trim() === "") {
+        setTagInput(tag);
       } else {
-        setDescription(description + ", " + tag);
+        setTagInput(tagInput + ", " + tag);
       }
+    }
+  };
+
+  const handleCreate = async () => {
+    if (generationMode === "simple" && !description.trim()) {
+      toast.error("Your description is empty!");
+      return;
+    }
+    if (generationMode === "custom" && !lyric.trim()) {
+      toast.error("Your lyric is empty!");
+      return;
+    }
+    let requestBody: GenerateSongRequest = {
+          inferStep: 30,
+          guidanceScale: 3.5,
+          guidanceScaleText: 2,
+          guidanceScaleLyric: 2,
+          schedulerType: "euler",
+          useErgTag: false,
+          useErgLyric: false,
+          useErgDiffusion: false,
+          guidanceInterval: 0.5,
+          guidanceIntervalDecay: 0,
+          seed: 42,
+          cfgType: "apg",
+          audioDuration: 150,
+          instrumental: instrumental,
+    };
+     if (generationMode === "simple") {
+      requestBody = {
+        ...requestBody,
+        fullDescribedSong: description,
+      };
+    } else {
+      const prompt = tagInput;
+      if (lyricMode === "manual") {
+        requestBody = {
+          ...requestBody,
+          prompt,
+          lyric,
+        };
+      } else {
+        requestBody = {
+          ...requestBody,
+          prompt,
+          describedLyrics: lyric,
+        };
+      }
+    }
+
+    try {
+      setLoading(true);
+      await generateSong(requestBody);
+      setDescription("");
+      setLyric("");
+      setTagInput("");
+    } catch (error) {
+      toast.error("Failed to generate song");
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,27 +136,6 @@ const SongGenerator = () => {
                 checked={instrumental}
                 onCheckedChange={setInstrumental}
               />
-            </div>
-
-            {/* Tags */}
-            <div className="flex flex-col gap-3">
-              <label className="text-base font-medium">Try these</label>
-              <div className="w-full overflow-x-auto whitespace-nowrap">
-                <div className="flex gap-2 pb-3">
-                  {inspirationTags.map((tag) => (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex h-7 shrink-0 rounded-sm border-1 bg-transparent text-xs"
-                      onClick={() => handleTagsClick(tag)}
-                      key={tag}
-                    >
-                      <Plus />
-                      {tag}
-                    </Button>
-                  ))}
-                </div>
-              </div>
             </div>
           </TabsContent>
 
@@ -150,6 +195,12 @@ const SongGenerator = () => {
             {/* Tags */}
             <div className="flex flex-col gap-3">
               <label className="text-base font-medium">Try these</label>
+              <Textarea
+                placeholder="Enter some styles"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                className="min-h-[60px] resize-none"
+              />
               <div className="w-full overflow-x-auto whitespace-nowrap">
                 <div className="flex gap-2 pb-3">
                   {inspirationTags.map((tag) => (
@@ -169,6 +220,11 @@ const SongGenerator = () => {
             </div>
           </TabsContent>
         </Tabs>
+        <div className="mt-4 w-full border-t p-4">
+          <Button className="w-full" onClick={handleCreate} disabled={loading}>
+            {loading ? "Create..." : "Create"}
+          </Button>
+        </div>
       </div>
     </div>
   );
