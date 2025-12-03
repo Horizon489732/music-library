@@ -93,4 +93,6 @@ export const generateSong = async (request: GenerateSongRequest) => {
     userId: userId,
     songId: song.id,
   });
+
+  return song.id;
 };

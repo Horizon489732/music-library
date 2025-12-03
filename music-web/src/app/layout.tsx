@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
+import { Providers as RealtimeProvider } from "@/components/client-wrapper/RealtimeProviderWrapper";
 import { auth } from "@/server/auth/index";
 
 export const metadata: Metadata = {
@@ -54,8 +55,10 @@ export default async function RootLayout({
         <body
           className={`${dmSans.className} ${spaceMono.variable} font-sans antialiased`}
         >
-          <Toaster richColors closeButton position="top-right" />
-          {children}
+          <RealtimeProvider>
+            <Toaster richColors closeButton position="top-right" />
+            {children}
+          </RealtimeProvider>
         </body>
       </SessionProvider>
     </html>
