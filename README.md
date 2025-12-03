@@ -1,4 +1,4 @@
-# 🎵 AI-Powered Music Platform (In-Progess)
+# 🎵 AI-Powered Music Platform (In-Progress)
 A full-stack web application for creating, uploading, listening to, and managing AI-generated music.
 
 This platform allows users to upload their own songs and thumbnails — **or generate them with AI**.  
