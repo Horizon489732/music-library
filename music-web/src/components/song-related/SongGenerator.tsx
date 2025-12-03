@@ -27,7 +27,7 @@ const SongGenerator = () => {
   const [tagInput, setTagInput] = useState("");
   const [lyricMode, setLyricMode] = useState<"auto" | "manual">("manual");
   const [loading, setLoading] = useState(false);
-  const [workflowId, setWorkflowId] = useState("");
+  const [songId, setSongId] = useState("");
 
   const handleTagsClick = (tag: string) => {
     const currentTags = tagInput
@@ -93,11 +93,11 @@ const SongGenerator = () => {
 
     try {
       setLoading(true);
-      const res = await generateSong(requestBody) as string;
-      setWorkflowId(res);
+      const songId = await generateSong(requestBody);
       setDescription("");
       setLyric("");
       setTagInput("");
+      setSongId(songId);
     } catch (error) {
       toast.error("Failed to generate song");
       console.log(error);
@@ -227,8 +227,7 @@ const SongGenerator = () => {
           <Button className="w-full" onClick={handleCreate} disabled={loading}>
             {loading ? "Create..." : "Create"}
           </Button>
-
-          <SongCreation />
+          <SongCreation songId={songId}/>
         </div>
       </div>
     </div>

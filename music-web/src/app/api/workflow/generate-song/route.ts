@@ -1,5 +1,4 @@
 import { db } from "@/server/db";
-import { redis } from "@/server/redis";
 import { env } from "@/env";
 import { serve } from "@upstash/workflow/nextjs";
 import { WorkflowNonRetryableError } from "@upstash/workflow";
@@ -14,8 +13,13 @@ export const { POST } = serve<InitialData>(async (context) => {
   const { userId, songId } = context.requestPayload;
   const workflowRunId = context.workflowRunId;
 
-  await redis.set(songId, workflowRunId);
+  const globalChannel = realtime.channel("workflows-global");
+  await globalChannel.emit("workflow.started", { songId, workflowRunId });
+
   const channel = realtime.channel(workflowRunId);
+
+
+  console.log("inside api/workflow/generate-song. WorkflowRunId: ", workflowRunId)
 
   //checking environment variables
   if (
@@ -28,7 +32,6 @@ export const { POST } = serve<InitialData>(async (context) => {
 
   //get the song
   const song = await context.run("fetch-song", async () => {
-    console.log("Inside fetch-song workflow step", "songId:", songId);
     return await db.song.findUniqueOrThrow({
       where: { id: songId },
       include: { aiDetails: true },
